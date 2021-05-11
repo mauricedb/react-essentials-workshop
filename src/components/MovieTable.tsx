@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+const moviesApiUrl =
+  "https://the-problem-solver-sample-data.azurewebsites.net/top-rated-movies";
 
 export function MovieTable() {
-  const [movies, setMovies] = useState([
-    { id: 238, title: "The Godfather" },
-    { id: 424, title: "Schindler's List" },
-  ]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    async function fetchMovies() {
+      const rsp = await fetch(moviesApiUrl);
+      const json = await rsp.json();
+      setMovies(json);
+    }
+
+    fetchMovies();
+  }, []);
 
   return (
-    <table className="table table-striped">
+    <table className="table table-striped table-bordered">
       <thead>
         <tr>
           <th>Title</th>
