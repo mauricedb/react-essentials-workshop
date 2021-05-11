@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useFetch } from "../hooks/useFetch";
 
 const moviesApiUrl =
   "https://the-problem-solver-sample-data.azurewebsites.net/top-rated-movies";
 
 export function MovieTable() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-
-  useEffect(() => {
-    async function fetchMovies() {
-      const rsp = await fetch(moviesApiUrl);
-      const json = await rsp.json();
-      setMovies(json);
-    }
-
-    fetchMovies();
-  }, []);
+  const [movies] = useFetch<Movie[]>(moviesApiUrl, []);
 
   return (
     <table className="table table-striped table-bordered">
