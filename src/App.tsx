@@ -1,11 +1,11 @@
-import React from 'react';
-import './App.css';
-import { Greeter } from './components/Greeting';
+import React from "react";
+import "./App.css";
+import { Greeter } from "./components/Greeting";
 
 function App() {
   return (
     <div className="App">
-      <Greeter />
+      <Greeter firstName="Maurice" today={new Date()} />
     </div>
   );
 }

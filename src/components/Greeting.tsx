@@ -1,5 +1,15 @@
-import React from 'react';
+import React from "react";
 
-export function Greeter() {
-    return <div>Hello world</div>
+interface Props {
+  firstName: string;
+  today: Date;
+}
+
+export function Greeter({ firstName, today }: Props) {
+  return (
+    <div>
+      <div>Hello {firstName}</div>
+      <div>The date today is: {today.toLocaleDateString("nl")}</div>
+    </div>
+  );
 }
