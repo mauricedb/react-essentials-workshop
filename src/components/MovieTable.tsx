@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 
 const moviesApiUrl =
@@ -20,14 +21,9 @@ export function MovieTable() {
           <tr key={movie.id}>
             <td>{movie.title}</td>
             <td>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  alert(`Edit ${movie.title}`);
-                }}
-              >
+              <Link to={`/movie/${movie.id}`} className="btn btn-primary">
                 Edit
-              </button>
+              </Link>
             </td>
           </tr>
         ))}
