@@ -6,29 +6,59 @@ const moviesApiUrl =
 
 export function SingleMovie() {
   const { id } = useParams<{ id: string }>();
-  const [movie] = useFetch<Movie | null>(`${moviesApiUrl}/${id}`, null);
+  const [movie, setMovie] = useFetch<Movie | null>(
+    `${moviesApiUrl}/${id}`,
+    null
+  );
 
   if (!movie) {
     return <div>Loading...</div>;
   }
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        alert(JSON.stringify(movie, null, 2));
+      }}
+    >
       <div className="mb-3">
         <label className="form-label">Title:</label>
-        <div>{movie.title}</div>
+        <input
+          className="form-control"
+          value={movie.title}
+          onChange={(e) => setMovie({ ...movie, title: e.target.value })}
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">Overview:</label>
-        <div>{movie.overview}</div>
+        <textarea
+          className="form-control"
+          rows={5}
+          value={movie.overview}
+          onChange={(e) => setMovie({ ...movie, overview: e.target.value })}
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">Release date:</label>
-        <div>{movie.release_date}</div>
+        <input
+          className="form-control"
+          value={movie.release_date}
+          onChange={(e) => setMovie({ ...movie, release_date: e.target.value })}
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">Vote average:</label>
-        <div>{movie.vote_average}</div>
+        <input
+          className="form-control"
+          value={movie.vote_average}
+          onChange={(e) =>
+            setMovie({ ...movie, vote_average: +e.target.value })
+          }
+        />
+      </div>
+      <div className="mb-3">
+        <button type="submit">Submit</button>
       </div>
     </form>
   );
