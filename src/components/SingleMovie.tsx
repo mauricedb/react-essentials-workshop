@@ -1,6 +1,8 @@
-import React from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
+import { movieSchema } from "../schemas/movieSchema";
+import { Movie } from "../types/movie";
 import { FormInput } from "./FormInput";
 import { FormTextArea } from "./FormTextArea";
 
@@ -13,6 +15,19 @@ export function SingleMovie() {
     `${moviesApiUrl}/${id}`,
     null
   );
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
+
+  useEffect(() => {
+    if (movie) {
+      const validationResult = movieSchema.safeParse(movie);
+
+      if (validationResult.success) {
+        setErrors({});
+      } else {
+        setErrors(validationResult.error.flatten().fieldErrors);
+      }
+    }
+  }, [movie]);
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -29,6 +44,7 @@ export function SingleMovie() {
         label="Title:"
         value={movie.title}
         onChange={(e) => setMovie({ ...movie, title: e.target.value })}
+        errors={errors.title}
       />
       <FormTextArea
         label="Overview:"
@@ -40,11 +56,13 @@ export function SingleMovie() {
         label="Release date:"
         value={movie.release_date}
         onChange={(e) => setMovie({ ...movie, release_date: e.target.value })}
+        errors={errors.release_date}
       />
       <FormInput
         label="Vote average:"
         value={movie.vote_average}
         onChange={(e) => setMovie({ ...movie, vote_average: +e.target.value })}
+        errors={errors.vote_average}
       />
 
       <div className="mb-3">

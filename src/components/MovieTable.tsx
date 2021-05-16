@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
+import { Movie } from "../types/movie";
 
 const moviesApiUrl =
   "https://the-problem-solver-sample-data.azurewebsites.net/top-rated-movies";

@@ -1,8 +1,4 @@
-interface Movie {
-  id: number;
-  overview: string;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  vote_average: number;
-}
+import { z } from "zod";
+import { movieSchema } from "../schemas/movieSchema";
+
+export type Movie = z.infer<typeof movieSchema>;
